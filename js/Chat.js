@@ -13,9 +13,11 @@ var ChatInput = React.createClass({
   onKeyDown: function(event) {
     if (event.keyCode === /*ENTER*/13) {
       // TODO firebase me
+      var message = this.refs['chat_input'].getDOMNode().value;
+      FB.writeChat(message);
       chat_messages.push({
         author: this.props.author,
-        body: this.refs['chat_input'].getDOMNode().value
+        body: message
       });
       this.refs['chat_input'].getDOMNode().value = '';
       updateChat(chat_messages);
