@@ -20,7 +20,6 @@ var ChatInput = React.createClass({
         body: message
       });
       this.refs['chat_input'].getDOMNode().value = '';
-      updateChat(chat_messages);
     }
   },
 
@@ -86,4 +85,6 @@ function updateChat(chat_messages) {
     document.getElementById('react_chat')
   );
 }
-updateChat(chat_messages);
+
+FB.registerCallback(updateChat);
+updateChat([]);
