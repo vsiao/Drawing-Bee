@@ -64,7 +64,6 @@ io.sockets.on 'connection', (socket) ->
       guessers = sockets.diff drawers
 
       # tell everyone what they are
-
       d.emit 'playerType', "drawer#{i}" for d, i in drawers
       g.emit 'playerType', 'guesser' for g in guessers
 

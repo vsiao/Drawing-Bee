@@ -3,7 +3,6 @@ __session = {
   user_name: 'user ' + Math.floor(Math.random() * 1000),
   room_name: 'lobby',
   player_type: null,
-  game_position: 'not_playing',
   setRoomName: function(room_name) {
     var old_room_name = this.room_name;
     if (room_name != 'lobby') {
@@ -82,12 +81,16 @@ __session = {
       __session.socket.on('started', function() {
         if (__session.player_type == 'drawer0' || __session.player_type == 'drawer1') {
           __session.socket.on('word', function(word) {
-            console.log("word: " + word);
-            // do something with the word!
+            __session.setWord(word);
           });
           __session.socket.emit('getWord');
         }
       });
+
+      __session.socket.on('playerType', function(type) {
+        __session.player_type = type;
+      });
+      // on joined, count >= 3, enable button, on count < 3, disable button
 
       __session.socket.on('winner', function(winner) {
         console.log("winner: " + winner);
@@ -95,10 +98,6 @@ __session = {
       });
     },
     join: function(room_name) {
-      __session.socket.on('playerType', function(type) {
-        __session.player_type = type;
-      });
-      // on joined, count >= 3, enable button, on count < 3, disable button
       __session.socket.emit('join', room_name, __session.user_name);
     },
     leave: function(room_name) {
