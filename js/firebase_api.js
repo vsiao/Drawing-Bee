@@ -4,7 +4,9 @@ __session = {
   room_name: 'lobby',
   game_position: 'not_playing',
   setRoomName: function(room_name) {
-    this.room.join(room_name);
+    if (room_name != 'lobby') {
+      this.game.join(room_name);
+    }
     this.room_name = room_name;
     this.chat.initialize();
   },
@@ -14,17 +16,6 @@ __session = {
   },
   getUserName: function() {
     return this.user_name;
-  },
-  room: {
-    join: function(room_name) {
-      // TODO put something here
-    },
-    startGame: function() {
-      // TODO put something here
-    },
-    setCallback: function(callback) {
-      // TODO put something here
-    }
   },
   canvas: {
     drawing_ref: new Firebase('https://drawingbee.firebaseio.com/drawings'),
@@ -73,6 +64,9 @@ __session = {
         );
       };
       render();
+    },
+    join: function(room_name) {
+      // TODO put something here I guess
     }
   },
   chat: {
