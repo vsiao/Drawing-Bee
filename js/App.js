@@ -103,6 +103,12 @@ __session = {
 
       __session.socket.on('started', function() {
         __session.in_progress = true;
+        if (__session._winner_plaque) {
+          __session._winner_plaque.parentNode.removeChild(
+            __session._winner_plaque
+          );
+          __session._winner_plaque = undefined;
+        }
         me.renderConsole();
       });
 
@@ -128,11 +134,32 @@ __session = {
       });
 
       __session.socket.on('winner', function(winner, word) {
-        // do something with winner!
-        alert("Winner: " + winner + " with word " + word);
         __session.in_progress = false;
         __session.word = null;
         __session.canvas.reset();
+        __session._winner_plaque = document.createElement('div');
+        __session._winner_plaque.className = 'winner-plaque';
+
+        winner_name = document.createElement('span');
+        winner_name.className = 'winner-name';
+        winner_name.appendChild(document.createTextNode(winner));
+        winner_word = document.createElement('span');
+        winner_word.className = 'winner-word';
+        winner_word.appendChild(document.createTextNode(word));
+
+        [
+          winner_name,
+          document.createTextNode(' guessed it!'),
+          document.createElement('br'),
+          document.createTextNode('The answer was '),
+          winner_word,
+          document.createTextNode('.')
+        ].forEach(function(element) {
+          __session._winner_plaque.appendChild(element);
+        });
+        document.getElementById('canvas_container').appendChild(
+          __session._winner_plaque
+        );
         me.renderConsole();
       });
 
