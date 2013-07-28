@@ -11,19 +11,28 @@ var Canvas = {
       me._endStroke();
     });
     me._canvas.addEventListener('mousemove', function(event) {
-    });
-    __session.canvas.setCallback(function(points) {
+      me._moveStroke();
     });
   },
 
   _startStroke: function() {
     this._drawing = true;
+    //this._context.moveTo();
+    //this._context.beginPath();
   },
 
   _endStroke: function() {
     if (!this._drawing) {
       return;
     }
+    this._drawing = false;
+  },
+
+  _moveStroke: function() {
+    if (!this._drawing) {
+      return;
+    }
+    
   }
 };
 

@@ -10,7 +10,9 @@
 </head>
 <body>
 <div id="drawing_bee_app">
+  <div id="react_game_console"></div>
   <div id="main_container">
+    <!--
     <div id="angular_app_info" ng-app>
       <div class="js-game-lobby" ng-controller="GameLobby">
         <div class="js-choose-username-form">
@@ -37,14 +39,18 @@
         </ul>
       </div>
     </div>
+    -->
 
     <canvas id="canvas" height="400px" width="600px"></canvas>
   </div>
   <div id="react_sidebar"></div>
 </div>
-<script src="js/firebase_api.js"></script>
-<script type="text/javascript" src="js/Chat.js"></script>
+<script type="text/javascript" src="js/GameConsole.js"></script>
+<script type="text/javascript" src="js/ChatSidebar.js"></script>
 <script type="text/javascript" src="js/Canvas.js"></script>
-<script type="text/javascript" src="js/GameLobby.js"></script>
+<script type="text/javascript" src="js/firebase_api.js"></script>
+<script type="text/javascript">
+__session.chat.initialize(ChatSidebar);
+</script>
 </body>
 </html>

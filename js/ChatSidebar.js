@@ -1,10 +1,14 @@
 var ChatInput = React.createClass({
 
+  propTypes: {
+    onSubmit: React.PropTypes.func.isRequired
+  },
+
   onKeyDown: function(event) {
     if (event.keyCode === /*ENTER*/13) {
       var message = this.refs['chat_input'].getDOMNode().value;
       this.refs['chat_input'].getDOMNode().value = '';
-      __session.chat.write(message);
+      this.props.onSubmit(message);
     }
   },
 
@@ -39,9 +43,10 @@ var ChatMessage = React.createClass({
   }
 });
 
-var Sidebar = React.createClass({
+var ChatSidebar = React.createClass({
 
   propTypes: {
+    onSubmitMessage: React.PropTypes.func.isRequired,
     messages: React.PropTypes.array.isRequired
   },
 
@@ -78,20 +83,9 @@ var Sidebar = React.createClass({
             });
           })
         }),
-        React.DOM.div({
-          className: 'chat-input-container',
-          children: [ChatInput()]
-        })
+        React.DOM.div({className: 'chat-input-container'},
+          ChatInput({onSubmit: this.props.onSubmitMessage}))
       ]
     });
   }
 });
-
-function updateChat(props) {
-  React.renderComponent(
-    Sidebar(props),
-    document.getElementById('react_sidebar')
-  );
-}
-
-__session.chat.setCallback(updateChat);
