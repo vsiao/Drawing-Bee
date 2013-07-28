@@ -53,8 +53,8 @@ io.sockets.on 'connection', (socket) ->
       socket.get 'drawer', (err, drawer) ->
         switch drawer
           when 0, 1
-          db.get "drawingbee:#{room}:word", (err, word) ->
-            socket.emit 'word', word
+            db.get "drawingbee:#{room}:word", (err, word) ->
+              socket.emit 'word', word
           else console.log "error! #{drawer}"
 
   socket.on 'start', ->
