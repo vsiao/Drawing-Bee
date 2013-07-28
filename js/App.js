@@ -35,6 +35,7 @@ __session = {
   },
   canvas: {
     drawing_ref: new Firebase('https://drawingbee.firebaseio.com/drawings'),
+    drawing_room_ref: null,
     startStroke: function(coords) {
       var me = this;
       var room_ref = this.drawing_ref.child(__session.room_name);
@@ -47,10 +48,12 @@ __session = {
     },
     refresh: function() {
       this.canvas.clear();
-      var room_ref = this.drawing_ref.child(__session.room_name);
-      room_ref.off();
+      if (this.drawing_room_ref) {
+        this.drawing_room_ref.off();
+      }
+      this.drawing_room_ref = this.drawing_ref.child(__session.room_name);
       // Initialize by loading all strokes in this room
-      room_ref.on('child_added', function(stroke_thing) {
+      this.drawing_room_ref.on('child_added', function(stroke_thing) {
         stroke_thing.ref().on('child_added', function(coord_thing, prev_coord) {
           if (!prev_coord) {
             Canvas.startStroke(coord_thing.val());
