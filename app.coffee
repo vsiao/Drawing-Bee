@@ -51,10 +51,10 @@ io.sockets.on 'connection', (socket) ->
     socket.get 'room', (err, room) ->
       socket.get 'drawer', (err, drawer) ->
         switch drawer
-          when 0 then
+          when 0
             db.get "drawingbee:#{room}:word0", (err, word) ->
               socket.emit 'word', word
-          when 1 then
+          when 1
             db.get "drawingbee:#{room}:word1", (err, word) ->
               socket.emit 'word', word
           else console.log "error! #{drawer}"
@@ -76,7 +76,7 @@ io.sockets.on 'connection', (socket) ->
       db.get "drawingbee:#{room}:word0", (err, word0) ->
         db.get "drawingbee:#{room}:word1", (err, word1) ->
           switch guessWord
-            when word0, word1 then
+            when word0, word1
               socket.get 'username', (err, username) ->
                 io.sockets.in(room).emit 'winner', username,
                   words: [word0, word1]
