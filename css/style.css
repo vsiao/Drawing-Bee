@@ -49,19 +49,24 @@ input {
 #color_palette {
   left: 0;
   position: absolute;
-  top: -24px;
+  top: -25px;
 }
 
-#color_palette .color-choice {
-  margin: 3px;
-  border-width: 2px;
+.color-choice {
   border-radius: 4px;
-  border-color: #203732;
-  border-style: solid;
+  cursor: pointer;
+  display: inline-block;
+  height: 15px;
+  margin-right: 5px;
+  width: 15px;
+  transition: box-shadow 0.1s linear;
 }
-
-#color_palette .selected {
-  border-color: #fff;
+.color-choice.selected {
+  border: 2px solid #fff;
+  margin-top: -1px;
+}
+.color-choice:hover {
+  box-shadow: 0 0 5px #000;
 }
 
 #game_buttons {
@@ -85,6 +90,7 @@ input {
   font-size: 18px;
   padding: 10px 12px;
   text-shadow: 0 1px 0 #192321;
+  text-transform: uppercase;
   transition: box-shadow 0.1s linear;
 }
 .button-field-button.disabled {
@@ -96,12 +102,6 @@ input {
   box-shadow: 0 0 5px 1px #8bddcd;
 }
 
-.color-choice {
-  display: inline-block;
-  height: 15px;
-  width: 15px;
-}
-
 #react_game_console {
   background: #37aa93;
   border-right: 1px solid #203732;
@@ -110,6 +110,7 @@ input {
 }
 
 .game-console {
+  border-bottom: 1px solid #8bddcd;
 }
 
 .property {
@@ -119,6 +120,15 @@ input {
   text-align: center;
   padding-bottom: 10px;
   position: relative;
+}
+@-webkit-keyframes flashalert {
+  0% {background: #ea1999}
+  50% {background: #37aa93}
+  100% {background: #ea1999}
+}
+.property.alert {
+  -webkit-animation: flashalert 1s infinite;
+  border-bottom: red;
 }
 
 .property-header {

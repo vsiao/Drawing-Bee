@@ -16,17 +16,22 @@ var GameConsole = React.createClass({
   render: function() {
     var children = [
       this.props.in_progress
-      ? GameConsole.ButtonField({
-          onClick: function() { },
+      ? (this.props.word ? GameConsole.PropertyField({
+          extra_classes: 'alert',
+          header: this.props.is_drawing ? 'Hey you! Draw this'
+            : 'Partner\'s drawing',
+          editable: false,
+          value: this.props.word
+        }) : GameConsole.ButtonField({
           enabled: false,
-          text: "Game in progress..."
-        })
-      : GameConsole.ButtonField({
+          text: 'Guess away!'
+        }))
+      : (!this.props.waiting_to_start ? '' : GameConsole.ButtonField({
           onClick: this.props.onStartGame,
           enabled: this.props.num_players >= 3,
           text: this.props.num_players >= 3 ?
-            'Start Game!' : 'Waiting for players...'
-        }),
+            'Start Game!' : 'Waiting for players'
+        })),
       GameConsole.PropertyField({
         onChange: this.props.onSelectUsername,
         header: 'Hello, my name is',
@@ -41,14 +46,6 @@ var GameConsole = React.createClass({
       })
     ];
 
-    if (typeof this.props.word != 'undefined') {
-      children.push(GameConsole.PropertyField({
-        onChange: function() {},
-        header: 'Your word',
-        editable: false,
-        value: this.props.word
-      }));
-    }
     return React.DOM.div({
       className: 'game-console',
       children: children
@@ -66,7 +63,8 @@ GameConsole.PropertyField = React.createClass({
   },
 
   propTypes: {
-    onChange: React.PropTypes.func.isRequired,
+    onChange: React.PropTypes.func,
+    extra_classes: React.PropTypes.string,
     header: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired,
     editable: React.PropTypes.bool
@@ -113,7 +111,8 @@ GameConsole.PropertyField = React.createClass({
     }
 
     return React.DOM.div({
-      className: 'property',
+      className: 'property ' +
+          (this.props.extra_classes || ''),
       children: [
         React.DOM.div({
           className: 'property-header'
@@ -129,7 +128,7 @@ GameConsole.ButtonField = React.createClass({
 
   propTypes: {
     enabled: React.PropTypes.bool.isRequired,
-    onClick: React.PropTypes.func.isRequired,
+    onClick: React.PropTypes.func,
     text: React.PropTypes.string
   },
 

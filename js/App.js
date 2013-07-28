@@ -84,7 +84,8 @@ __session = {
         room: __session.getRoomName(),
         waiting_to_start: __session.getRoomName() !== "lobby",
         num_players: __session.num_players,
-        in_progress: __session.in_progress
+        in_progress: __session.in_progress,
+        is_drawing: __session.drawer === __session.player_type
       };
 
       if (__session.word != null) {
@@ -117,11 +118,13 @@ __session = {
       });
 
       __session.socket.on('turn', function(drawer) {
+        __session.drawer = drawer;
         if (drawer == __session.player_type) {
           Canvas.enable();
         } else {
           Canvas.disable();
         }
+        me.renderConsole();
       });
 
       __session.socket.on('winner', function(winner, word) {
