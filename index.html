@@ -10,12 +10,13 @@
 </head>
 <body>
   <div class="container" ng-app>
-    <div class="js-choose-username-form" ng-controller="UsernameForm" ng-show="showUsernameForm()">
-      <form ng-submit="setUsername()">
-        <input type="text" class="js-username-field" placeholder="username" ng-model="username" />
-      </form>
-    </div>
     <div class="js-game-lobby" ng-controller="GameLobby" ng-show="showLobby()">
+      <div class="js-choose-username-form">
+        <a href="#" ng-click="showUsernameForm = !showUsernameForm">change username</a>
+        <form ng-submit="setUsername()" ng-show="showUsernameForm">
+          <input type="text" class="js-username-field" placeholder="username" ng-model="username" />
+        </form>
+      </div>
       <ul class="js-game-list">
         <li class="js-game" ng-repeat="room in rooms">
           Players: 
@@ -32,7 +33,6 @@
   <div id="react_chat"></div>
   <script src="js/firebase_api.js"></script>
   <script type="text/javascript" src="js/Chat.js"></script>
-  <script type="text/javascript" src="js/UsernameForm.js"></script>
   <script type="text/javascript" src="js/GameLobby.js"></script>
 </body>
 </html>

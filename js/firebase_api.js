@@ -2,7 +2,7 @@ __session = {
   chatRef: new Firebase('https://drawingbee.firebaseio.com/chats'),
   drawingRef: new Firebase('https://drawingbee.firebaseio.com/drawings'),
   chatMessages: [],
-  userName: 'username' + Math.floor(Math.random() * 1000),
+  userName: 'user ' + Math.floor(Math.random() * 1000),
   roomName: 'roomname',
   writeStroke: function(stroke) {
     var room_ref = this.drawingRef.child(this.roomName);
