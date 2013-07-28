@@ -24,6 +24,12 @@ __session = {
   getUserName: function() {
     return this.user_name;
   },
+  setWord: function() {
+
+  },
+  clearWord: function() {
+
+  },
   canvas: {
     drawing_ref: new Firebase('https://drawingbee.firebaseio.com/drawings'),
     startStroke: function(coords) {
@@ -95,6 +101,7 @@ __session = {
       __session.socket.on('winner', function(winner) {
         console.log("winner: " + winner);
         // do something with winner!
+        __session.clearWord();
       });
     },
     join: function(room_name) {
