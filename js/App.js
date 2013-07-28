@@ -3,6 +3,7 @@ __session = {
   user_name: 'user ' + Math.floor(Math.random() * 1000),
   room_name: 'lobby',
   player_type: null,
+  num_players: 0,
   setRoomName: function(room_name) {
     var old_room_name = this.room_name;
     if (room_name != 'lobby') {
@@ -14,12 +15,14 @@ __session = {
     this.room_name = room_name;
     this.canvas.refresh();
     this.chat.initialize(ChatSidebar);
+    this.game.renderConsole();
   },
   getRoomName: function() {
     return this.room_name;
   },
   setUserName: function(user_name) {
     this.user_name = user_name;
+    this.game.renderConsole();
   },
   getUserName: function() {
     return this.user_name;
@@ -63,31 +66,29 @@ __session = {
     }
   },
   game: {
+    renderConsole: function() {
+      React.renderComponent(
+        GameConsole({
+          onSelectUsername: function(name) {
+            __session.setUserName(name);
+          },
+          onSelectRoom: function(room) {
+            __session.setRoomName(room);
+          },
+          onStartGame: function() {
+            __session.socket.emit('start');
+          },
+          username: __session.getUserName(),
+          room: __session.getRoomName(),
+          waiting_to_start: __session.getRoomName() !== "lobby",
+          num_players: __session.num_players
+        }),
+        document.getElementById('react_game_console')
+      );
+    },
     initialize: function(GameConsole) {
       var me = this;
-      var render = function() {
-        React.renderComponent(
-          GameConsole({
-            onSelectUsername: function(name) {
-              __session.setUserName(name);
-              render();
-            },
-            onSelectRoom: function(room) {
-              __session.setRoomName(room);
-              render();
-            },
-            onStartGame: function() {
-              __session.socket.emit('start');
-            },
-            username: __session.getUserName(),
-            room: __session.getRoomName(),
-            waiting_to_start: true, // TODO sri
-            players: [] // TODO sri :)
-          }),
-          document.getElementById('react_game_console')
-        );
-      };
-      render();
+      this.renderConsole();
 
       __session.socket.on('started', function() {
         if (__session.player_type == 'drawer0' || __session.player_type == 'drawer1') {
@@ -109,16 +110,9 @@ __session = {
         __session.clearWord();
       });
 
-      __session.socket.on('players', function(players) {
-        React.renderComponent(
-          StartButton({
-            enabled: players.length >= 3,
-            onClick: function() {
-              __session.socket.emit('start');
-            }
-          }),
-          document.getElementById('game_buttons')
-        );
+      __session.socket.on('players', function(data) {
+        __session.num_players = data.count;
+        me.renderConsole();
       });
     },
     join: function(room_name) {

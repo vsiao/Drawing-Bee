@@ -9,7 +9,7 @@ var GameConsole = React.createClass({
 
     onStartGame: React.PropTypes.func.isRequired,
     waiting_to_start: React.PropTypes.bool,
-    players: React.PropTypes.array
+    num_players: React.PropTypes.number
   },
 
   render: function() {
@@ -19,8 +19,8 @@ var GameConsole = React.createClass({
         !this.props.waiting_to_start ? '' :
           GameConsole.ButtonField({
             onClick: this.props.onStartGame,
-            enabled: this.props.players.length >= 3,
-            text: this.props.players.length >= 3 ?
+            enabled: this.props.num_players >= 3,
+            text: this.props.num_players >= 3 ?
               'Start Game!' : 'Waiting for players...'
           }),
         GameConsole.PropertyField({
