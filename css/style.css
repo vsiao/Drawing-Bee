@@ -52,6 +52,11 @@ input {
   top: -20px;
 }
 
+#color_palette .color-choice {
+  margin: 3px;
+  border-radius: 4px;
+}
+
 .color-choice {
   display: inline-block;
   height: 15px;
