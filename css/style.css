@@ -1,4 +1,10 @@
+/**
+dark_bg: #203732;
+shadow: #192321;
+*/
+
 body {
+  background: #daf3ee;
   font-family: 'Roboto', Verdana, Helvetica, Arial, sans-serif;
 }
 
@@ -10,16 +16,43 @@ input {
   outline: none;
 }
 
+#drawing_bee_app {
+  bottom: 0;
+  display: -webkit-box;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#main_container {
+  -webkit-box-flex: 1;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  display: -webkit-box;
+}
+
+#angular_app_info {
+  position: absolute;
+}
+
+#canvas {
+  background: #fff;
+  box-shadow: 0 0 2px 1px #203732;
+}
+
+#react_chat {
+  width: 20%;
+}
+
 .chat-container {
   background: #203732;
   border-left: 1px solid #27594f;
   box-shadow: 1px 0 1px 0 #192321 inset;
-  bottom: 0;
+  height: 100%;
   overflow-y: auto;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 20%;
+  width: 100%;
 }
 
 .chat-messages {

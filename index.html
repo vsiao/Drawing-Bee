@@ -9,30 +9,36 @@
   <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
-  <div class="container" ng-app>
-    <div class="js-game-lobby" ng-controller="GameLobby">
-      <div class="js-choose-username-form">
-        <a href="#" ng-click="showUsernameForm = !showUsernameForm">change username</a>
-        <form ng-submit="setUsername()" ng-show="showUsernameForm">
-          <input type="text" class="js-username-field" placeholder="username" ng-model="username" />
-        </form>
+<div id="drawing_bee_app">
+  <div id="main_container">
+    <div id="angular_app_info" ng-app>
+      <div class="js-game-lobby" ng-controller="GameLobby">
+        <div class="js-choose-username-form">
+          <a href="#" ng-click="showUsernameForm = !showUsernameForm">change username</a>
+          <form ng-submit="setUsername()" ng-show="showUsernameForm">
+            <input type="text" class="js-username-field" placeholder="username" ng-model="username" />
+          </form>
+        </div>
+        <ul class="js-game-list">
+          <li class="js-game" ng-repeat="room in rooms">
+            Players: 
+            <ul class="js-player-list">
+              <li class="js-player" ng-repeat="player in room.players">
+                {{ player }}
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
-      <ul class="js-game-list">
-        <li class="js-game" ng-repeat="room in rooms">
-          Players: 
-          <ul class="js-player-list">
-            <li class="js-player" ng-repeat="player in room.players">
-              {{ player }}
-            </li>
-          </ul>
-        </li>
-      </ul>
     </div>
-  </div>
 
+    <canvas id="canvas" height="400px" width="600px"></canvas>
+  </div>
   <div id="react_chat"></div>
-  <script src="js/firebase_api.js"></script>
-  <script type="text/javascript" src="js/Chat.js"></script>
-  <script type="text/javascript" src="js/GameLobby.js"></script>
+</div>
+<script src="js/firebase_api.js"></script>
+<script type="text/javascript" src="js/Chat.js"></script>
+<script type="text/javascript" src="js/Canvas.js"></script>
+<script type="text/javascript" src="js/GameLobby.js"></script>
 </body>
 </html>
