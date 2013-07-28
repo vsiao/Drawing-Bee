@@ -19,6 +19,12 @@
             <input type="text" class="js-username-field" placeholder="username" ng-model="username" />
           </form>
         </div>
+        <div class="js-choose-username-form">
+          <a href="#" ng-click="showRoomNameForm = !showRoomNameForm">create new game</a>
+          <form ng-submit="setRoom()" ng-show="showRoomNameForm">
+            <input type="text" class="js-room-name-field" placeholder="room name" ng-model="roomName" />
+          </form>
+        </div>
         <ul class="js-game-list">
           <li class="js-game" ng-repeat="room in rooms">
             Players: 
