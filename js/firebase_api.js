@@ -8,6 +8,7 @@ __session = {
   },
   setUserName: function(user_name) {
     this.user_name = user_name;
+    this.chat.initialize();
   },
   writeStroke: function(stroke) {
     var room_ref = this.drawing_ref.child(this.room_name);
