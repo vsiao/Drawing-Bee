@@ -23,6 +23,7 @@
 <script type="text/javascript" src="js/Canvas.js"></script>
 <script type="text/javascript" src="js/firebase_api.js"></script>
 <script type="text/javascript">
+__session.socket = io.connect("http://localhost:3000");
 __session.chat.initialize(ChatSidebar);
 __session.game.initialize(GameConsole);
 __session.canvas.initialize(Canvas);
