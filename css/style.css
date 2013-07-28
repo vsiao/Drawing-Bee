@@ -49,18 +49,26 @@ input {
 #color_palette {
   left: 0;
   position: absolute;
-  top: -20px;
+  top: -24px;
 }
 
 #color_palette .color-choice {
   margin: 3px;
+  border-width: 2px;
   border-radius: 4px;
+  border-color: #203732;
+  border-style: solid;
+}
+
+#color_palette .selected {
+  border-color: #fff;
 }
 
 #game_buttons {
   position: absolute;
   right: 0;
   bottom: -45px;
+  border-width: 2px;
 }
 
 .button-field {

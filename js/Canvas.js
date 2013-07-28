@@ -66,9 +66,18 @@ var Canvas = {
       node.className = 'color-choice';
       node.onclick = function() {
         me._color = color;
+        var color_elems = palette.children;
+        for (var i=0; i < color_elems.length; i++) {
+          if (color_elems[i] == this) {
+            color_elems[i].className = 'color-choice selected';
+          } else {
+            color_elems[i].className = 'color-choice';
+          }
+        }
       };
       palette.appendChild(node);
     });
+    palette.firstChild.className += ' selected'
     root.appendChild(palette);
   },
 
