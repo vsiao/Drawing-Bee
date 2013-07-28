@@ -11,17 +11,22 @@ var GameConsole = React.createClass({
     return React.DOM.div({
       className: 'game-console',
       children: [
-        GameConsole.Username({
-          onSelectUsername: this.props.onSelectUsername,
-          username: this.props.username
+        GameConsole.PropertyField({
+          onChange: this.props.onSelectUsername,
+          header: 'Hello, my name is',
+          value: this.props.username
         }),
-        GameConsole.Room()
+        GameConsole.PropertyField({
+          onChange: this.props.onSelectRoom,
+          header: 'I\'m having fun in',
+          value: this.props.room
+        })
       ]
     });
   }
 });
 
-GameConsole.Username = React.createClass({
+GameConsole.PropertyField = React.createClass({
 
   getInitialState: function() {
     return {
@@ -31,63 +36,56 @@ GameConsole.Username = React.createClass({
   },
 
   propTypes: {
-    onSelectUsername: React.PropTypes.func.isRequired,
-    username: React.PropTypes.string.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    header: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string.isRequired
   },
 
   componentDidUpdate: function(prevProps, prevState, rootNode) {
     if (this.state.editing) {
-      this.refs['username_input'].getDOMNode().focus();
+      this.refs['input'].getDOMNode().focus();
     }
   },
 
   render: function() {
     var me = this;
-    var name_input = React.DOM.input({
-      className: 'username-input',
-      ref: 'username_input',
+    var input = React.DOM.input({
+      className: 'property-input',
+      ref: 'input',
       value: this.state.input_value,
       onKeyDown: function(event) {
         if (event.keyCode === /*ENTER*/13) {
-          me.props.onSelectUsername(
-            me.refs['username_input'].getDOMNode().value);
+          me.props.onChange(
+            me.refs['input'].getDOMNode().value);
           me.setState({editing: false});
         }
       },
       onChange: function() {
         me.setState({
-          input_value: me.refs['username_input'].getDOMNode().value
+          input_value: me.refs['input'].getDOMNode().value
         });
       }
     });
     var edit_button = React.DOM.a({
-      className: 'username-edit',
+      className: 'property-edit',
       href: '#',
       onClick: function() {
         me.setState({
           editing: true,
-          input_value: me.props.username
+          input_value: me.props.value
         });
       }
     }, 'Edit');
 
     return React.DOM.div({
-      className: 'user-info',
+      className: 'property',
       children: [
         React.DOM.div({
-          className: 'username-header'
-        }, 'Hello, my name is'),
-        this.state.editing ? name_input : this.props.username,
+          className: 'property-header'
+        }, this.props.header),
+        this.state.editing ? input : this.props.value,
         this.state.editing ? '' : edit_button
       ]
-    });
-  }
-});
-
-GameConsole.Room = React.createClass({
-  render: function() {
-    return React.DOM.div({
-      className: 'room-info'
     });
   }
 });

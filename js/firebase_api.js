@@ -4,11 +4,11 @@ __session = {
   room_name: 'lobby',
   game_position: 'not_playing',
   setRoomName: function(room_name) {
-    if (room_name != 'lobby') {
-      this.game.join(room_name);
-    }
     this.room_name = room_name;
-    this.chat.initialize();
+    this.canvas.refresh();
+  },
+  getRoomName: function() {
+    return this.room_name;
   },
   setUserName: function(user_name) {
     this.user_name = user_name;
@@ -30,8 +30,8 @@ __session = {
       console.log(" **** moving to [" + coords.x + ", " + coords.y + "] **** ");
       stroke_ref.push(coords);
     },
-    initialize: function(Canvas) {
-      this.canvas = Canvas;
+    refresh: function() {
+      this.canvas.clear();
       var room_ref = this.drawing_ref.child(__session.room_name);
       room_ref.off();
       // Initialize by loading all strokes in this room
@@ -44,6 +44,10 @@ __session = {
           }
         });
       });
+    },
+    initialize: function(Canvas) {
+      this.canvas = Canvas;
+      this.refresh();
     }
   },
   game: {
@@ -56,10 +60,12 @@ __session = {
               __session.setUserName(name);
               render();
             },
-            onSelectRoom: function() {
+            onSelectRoom: function(room) {
+              __session.setRoomName(room);
+              render();
             },
             username: __session.getUserName(),
-            room: '',
+            room: __session.getRoomName(),
           }),
           document.getElementById('react_game_console')
         );

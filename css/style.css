@@ -52,7 +52,8 @@ input {
 .game-console {
 }
 
-.user-info {
+.property {
+  border-top: 1px solid #8bddcd;
   border-bottom: 1px solid #203732;
   color: #ffffff;
   text-align: center;
@@ -60,7 +61,7 @@ input {
   position: relative;
 }
 
-.username-header {
+.property-header {
   border-bottom: 1px solid #8bddcd;
   color: #c2eae2;
   font-size: 20px;
@@ -71,7 +72,7 @@ input {
   text-transform: uppercase;
 }
 
-.username-edit {
+.property-edit {
   top: 33px;
   color: #8bddcd;
   font-size: 10px;
@@ -82,12 +83,8 @@ input {
   text-transform: uppercase;
   transition: color 0.1s linear;
 }
-.username-edit:hover {
+.property-edit:hover {
   color: #fff;
-}
-
-.room-info {
-  border-top: 1px solid #8bddcd;
 }
 
 #canvas {

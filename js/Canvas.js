@@ -1,4 +1,8 @@
 var Canvas = {
+  clear: function() {
+    this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
+  },
+
   init: function(canvas) {
     var me = this;
     me._canvas = canvas;
@@ -7,8 +11,8 @@ var Canvas = {
       event.preventDefault(); // don't begin selection
       canvas_rect = me._canvas.getBoundingClientRect();
       me._stroke_ref = __session.canvas.startStroke({
-        x: event.pageX - canvas_rect.left,
-        y: event.pageY - canvas_rect.top
+        x: event.pageX - canvas_rect.left - 10,
+        y: event.pageY - canvas_rect.top - 10
       });
     });
     me._canvas.addEventListener('mouseup', function(event) {
@@ -20,8 +24,8 @@ var Canvas = {
       }
       canvas_rect = me._canvas.getBoundingClientRect();
       __session.canvas.addToStroke({
-        x: event.pageX - canvas_rect.left,
-        y: event.pageY - canvas_rect.top
+        x: event.pageX - canvas_rect.left - 10,
+        y: event.pageY - canvas_rect.top - 10
       }, me._stroke_ref);
     });
     this._context.lineWidth = 5;
