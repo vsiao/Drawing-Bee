@@ -17,13 +17,11 @@ Array::diff = (arr) ->
   this.filter (i) -> !(arr.indexOf(i) > -1)
 
 words = [
-  "derp"
-, "fish"
-, "cow"
-, "apple"
+  "unicorn"
+, "giraffe"
 , "coffee"
-, "airbnb"
-, "greylock"
+, "bicycle"
+, "mustache"
 ]
 
 setupWord = (room) ->
