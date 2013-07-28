@@ -16,7 +16,7 @@ function GameLobby($scope) {
   $scope.showUsernameForm = false;
 
   $scope.setUsername = function() {
-    __session.setUserName($scope.username);
+    __session.user_name = $scope.username;
     __session.initialize();
   }
 
