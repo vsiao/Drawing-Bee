@@ -76,8 +76,13 @@ __session = {
               __session.setRoomName(room);
               render();
             },
+            onStartGame: function() {
+              __session.socket.emit('start');
+            },
             username: __session.getUserName(),
             room: __session.getRoomName(),
+            waiting_to_start: true, // TODO sri
+            players: [] // TODO sri :)
           }),
           document.getElementById('react_game_console')
         );
@@ -103,9 +108,22 @@ __session = {
         // do something with winner!
         __session.clearWord();
       });
+
+      __session.socket.on('players', function(players) {
+        React.renderComponent(
+          StartButton({
+            enabled: players.length >= 3,
+            onClick: function() {
+              __session.socket.emit('start');
+            }
+          }),
+          document.getElementById('game_buttons')
+        );
+      });
     },
     join: function(room_name) {
       __session.socket.emit('join', room_name, __session.user_name);
+      
     },
     leave: function(room_name) {
       __session.socket.emit('leave', room_name);

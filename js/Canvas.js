@@ -12,6 +12,14 @@ var Canvas = {
     this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
   },
 
+  disable: function() {
+    this._can_draw = false;
+  },
+  enable: function() {
+    this._can_draw = true;
+  },
+  _can_draw: true,
+
   init: function(root, canvas) {
     var me = this;
     me._makeColors(root);
@@ -20,6 +28,9 @@ var Canvas = {
     me._context = canvas.getContext('2d');
     me._canvas.addEventListener('mousedown', function(event) {
       event.preventDefault(); // don't begin selection
+      if (!this._can_draw) {
+        return;
+      }
       canvas_rect = me._canvas.getBoundingClientRect();
       me._stroke_ref = __session.canvas.startStroke({
         x: event.pageX - canvas_rect.left - 10,
@@ -31,7 +42,7 @@ var Canvas = {
       me.endStroke();
     });
     me._canvas.addEventListener('mousemove', function(event) {
-      if (!me._drawing || !me._stroke_ref) {
+      if (!this._can_draw || !me._drawing || !me._stroke_ref) {
         return;
       }
       canvas_rect = me._canvas.getBoundingClientRect();

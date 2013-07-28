@@ -2,15 +2,27 @@ var GameConsole = React.createClass({
 
   propTypes: {
     onSelectUsername: React.PropTypes.func.isRequired,
-    onSelectRoom: React.PropTypes.func.isRequired,
     username: React.PropTypes.string.isRequired,
-    room: React.PropTypes.string.isRequired
+
+    onSelectRoom: React.PropTypes.func.isRequired,
+    room: React.PropTypes.string.isRequired,
+
+    onStartGame: React.PropTypes.func.isRequired,
+    waiting_to_start: React.PropTypes.bool,
+    players: React.PropTypes.array
   },
 
   render: function() {
     return React.DOM.div({
       className: 'game-console',
       children: [
+        !this.props.waiting_to_start ? '' :
+          GameConsole.ButtonField({
+            onClick: this.props.onStartGame,
+            enabled: this.props.players.length >= 3,
+            text: this.props.players.length >= 3 ?
+              'Start Game!' : 'Waiting for players...'
+          }),
         GameConsole.PropertyField({
           onChange: this.props.onSelectUsername,
           header: 'Hello, my name is',
@@ -106,5 +118,25 @@ GameConsole.PropertyField = React.createClass({
         this.state.editing ? '' : edit_button
       ]
     });
+  }
+});
+
+GameConsole.ButtonField = React.createClass({
+
+  propTypes: {
+    enabled: React.PropTypes.bool.isRequired,
+    onClick: React.PropTypes.func.isRequired,
+    text: React.PropTypes.string
+  },
+
+  render: function() {
+    return React.DOM.div({
+      className: 'button-field'
+    }, React.DOM.a({
+      className: 'button-field-button' +
+        (this.props.enabled ? '' : ' disabled'),
+      href: '#',
+      onClick: this.props.enabled ? this.props.onClick : null
+    }, this.props.text));
   }
 });
