@@ -19,34 +19,36 @@ __session = {
   canvas: {
     drawing_ref: new Firebase('https://drawingbee.firebaseio.com/drawings'),
     startStroke: function(coords) {
-      var room_ref = this.drawing_ref.child(this.room_name),
-          new_stroke_ref = room_ref.push();
+      var me = this;
+      var room_ref = this.drawing_ref.child(__session.room_name);
+      var new_stroke_ref = room_ref.push();
+      console.log(" **** starting @[" + coords.x + ", " + coords.y + "] **** ");
       new_stroke_ref.push(coords);
+      new_stroke_ref.on('child_added', function(snapshot) {
+        me.canvas.moveStroke(snapshot.val());
+      });
+      me.canvas.startStroke(coords);
       return new_stroke_ref;
     },
     addToStroke: function(coords, stroke_ref) {
+      console.log(" **** moving to [" + coords.x + ", " + coords.y + "] **** ");
       stroke_ref.push(coords);
     },
-    finishStroke: function(coords, stroke_ref) {
-      stroke_ref.push(coords);
-    },
-    setCallback: function(callback) {
-      this.callback = callback;
-      this.initialize();
-    },
-    initialize: function() {
+    initialize: function(Canvas) {
+      this.canvas = Canvas;
       var room_ref = this.drawing_ref.child(__session.room_name);
       room_ref.off();
-      room_ref.on('child_changed', function(snapshot) {
-        if (this.callback) {
-          this.callback(snapshot.name(), snapshot.val());
-        }
-      }.bind(this));
-      room_ref.on('child_added', function(snapshot) {
-        if (this.callback) {
-          this.callback(snapshot.name(), snapshot.val());
-        }
-      }.bind(this));
+      // Initialize by loading all strokes in this room
+      room_ref.on('child_added', function(stroke_thing) {
+        stroke_thing.ref().on('child_added', function(coord_thing, prev_coord) {
+          if (!prev_coord) {
+            Canvas.startStroke(coord_thing.val());
+          } else {
+            Canvas.moveStroke(coord_thing.val());
+          }
+        });
+        Canvas.endStroke();
+      });
     }
   },
   game: {
@@ -75,8 +77,9 @@ __session = {
   },
   chat: {
     initialize: function(ChatSidebar) {
-      var messages = [],
-          room_ref = new Firebase('https://drawingbee.firebaseio.com/chats/' + __session.room_name);
+      var messages = [];
+      var room_ref = new Firebase(
+          'https://drawingbee.firebaseio.com/chats/' + __session.room_name);
       var render = function(messages) {
         React.renderComponent(
           ChatSidebar({
