@@ -39,10 +39,15 @@ input {
 
 #canvas {
   background: #fff;
-  box-shadow: 0 0 2px 1px #203732;
+  border: 10px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 2px 0 #203732;
 }
 
 #react_chat {
+  background: #203732;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
   width: 20%;
 }
 
@@ -50,13 +55,12 @@ input {
   background: #203732;
   border-left: 1px solid #27594f;
   box-shadow: 1px 0 1px 0 #192321 inset;
-  height: 100%;
+  -webkit-box-flex: 1;
   overflow-y: auto;
   width: 100%;
 }
 
 .chat-messages {
-  border-bottom: 1px solid #28433e;
   color: #c2eae2;
   margin-bottom: 50px;
 }
