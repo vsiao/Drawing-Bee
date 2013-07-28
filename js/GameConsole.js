@@ -16,12 +16,12 @@ var GameConsole = React.createClass({
   render: function() {
     var children = [
       this.props.in_progress
-      ? (this.props.word ? GameConsole.PropertyField({
+      ? (this.props.word ? GameConsole.PropertyTimerField({
           extra_classes: 'alert',
           header: this.props.is_drawing ? 'Hey you! Draw this'
             : 'Partner\'s drawing',
           editable: false,
-          value: this.props.word
+          word: this.props.word
         }) : GameConsole.ButtonField({
           enabled: false,
           text: 'Guess away!'
@@ -121,6 +121,38 @@ GameConsole.PropertyField = React.createClass({
         this.state.editing ? '' : edit_button
       ]
     });
+  }
+});
+
+GameConsole.PropertyTimerField = React.createClass({
+  getInitialState: function() {
+    return {
+      time_remaining: 800,
+      timer: null
+    };
+  },
+
+  componentWillUnmount: function() {
+    this.state.timer && clearTimeout(this.state.timer);
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({time_remaining: 800});
+  },
+
+  render: function() {
+    var me = this;
+    if (this.state.timer) {
+      clearTimeout(this.state.timer);
+    }
+    this.state.timer = setTimeout(function() {
+      time_remaining = me.state.time_remaining - 3;
+      me.setState({time_remaining: time_remaining});
+    }, 30);
+    this.props.value = this.props.word + ' ('
+      + (Math.max(0, Math.floor(this.state.time_remaining / 100))) + '.'
+      + (Math.max(0, this.state.time_remaining % 100)) + 's)'
+    return GameConsole.PropertyField(this.props);
   }
 });
 
