@@ -50,6 +50,10 @@ var Chat = React.createClass({
     messages: React.PropTypes.array.isRequired
   },
 
+  componentDidUpdate: function(prevProps, prevState, rootNode) {
+    rootNode.scrollTop = rootNode.scrollHeight;
+  },
+
   render: function() {
     return React.DOM.div({
       className: 'chat-container',
@@ -63,7 +67,12 @@ var Chat = React.createClass({
             });
           })
         }),
-        ChatInput({author: this.props.author})
+        React.DOM.div({
+          className: 'chat-input-container',
+          children: [
+            ChatInput({author: this.props.author})
+          ]
+        })
       ]
     });
   }
