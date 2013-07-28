@@ -13,11 +13,13 @@ __session = {
     room_ref.push({author: this.userName, body: text});
   },
   initialize: function() {
+    var roomRef = this.chatRef.child(this.roomName);
     this.chatMessages = [];
     if (this.callback) {
       this.callback([]);
     }
-    this.chatRef.child(this.roomName).on('child_added', function(snapshot) {
+    roomRef.off();
+    roomRef.on('child_added', function(snapshot) {
       this.chatMessages.push(snapshot.val());
       if (this.callback) {
         this.callback(this.chatMessages);
