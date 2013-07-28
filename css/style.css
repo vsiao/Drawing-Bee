@@ -132,7 +132,7 @@ input {
   background: #203732;
   -webkit-box-flow: 1;
   -webkit-box-orient: vertical;
-  box-shadow: 2px 0 1px 0 #192321 inset;
+  box-shadow: 5px 0 5px -5px #192321 inset;
   display: -webkit-box;
   width: 100%;
 }
@@ -162,7 +162,6 @@ input {
 
 .chat-input-container {
   background: #fff;
-  box-shadow: 0 1px 2px 0 #fff;
   display: -webkit-box;
   height: 50px;
   width: 100%;
@@ -170,7 +169,7 @@ input {
 
 .chat-input {
   -webkit-box-flex: 1;
-  box-shadow: 2px 0 2px 0 #192321 inset;
+  box-shadow: 5px 0 5px -5px #192321 inset;
   display: block;
   height: 20px;
   padding: 5px 8px 25px 8px;

@@ -15,8 +15,7 @@ var GameConsole = React.createClass({
           onSelectUsername: this.props.onSelectUsername,
           username: this.props.username
         }),
-        GameConsole.Room({
-        })
+        GameConsole.Room()
       ]
     });
   }
