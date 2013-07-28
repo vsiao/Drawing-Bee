@@ -2,10 +2,10 @@
 
 function UsernameForm($scope) {
   $scope.setUsername = function() {
-    window.username = $scope.username;
+    __session.username = $scope.username;
   }
 
   $scope.showUsernameForm = function() {
-    return (typeof window.username == "undefined");
+    return (typeof __session.username == "undefined");
   }
 };
