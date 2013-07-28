@@ -4,6 +4,10 @@ __session = {
   chatMessages: [],
   userName: 'username' + Math.random(),
   roomName: 'roomname',
+  writeStroke: function(stroke) {
+    var room_ref = this.drawingRef.child(this.roomName);
+    room_ref.push({author: this.userName, stroke: stroke});
+  },
   writeChat: function(text) {
     var room_ref = this.chatRef.child(this.roomName);
     room_ref.push({author: this.userName, body: text});
