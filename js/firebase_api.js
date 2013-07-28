@@ -1,5 +1,4 @@
 __session = {
-  drawing_ref: new Firebase('https://drawingbee.firebaseio.com/drawings'),
   chat_messages: [],
   user_name: 'user ' + Math.floor(Math.random() * 1000),
   room_name: 'lobby',
@@ -11,6 +10,7 @@ __session = {
     this.chat.initialize();
   },
   canvas: {
+    drawing_ref: new Firebase('https://drawingbee.firebaseio.com/drawings'),
     startStroke: function(coords) {
       var room_ref = this.drawing_ref.child(this.room_name),
           new_stroke_ref = room_ref.push();
