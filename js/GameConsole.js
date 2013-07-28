@@ -9,45 +9,49 @@ var GameConsole = React.createClass({
 
     onStartGame: React.PropTypes.func.isRequired,
     waiting_to_start: React.PropTypes.bool,
-    num_players: React.PropTypes.number
+    num_players: React.PropTypes.number,
+    in_progress: React.PropTypes.bool
   },
 
   render: function() {
+    var children = [
+      this.props.in_progress
+      ? GameConsole.ButtonField({
+          onClick: function() { },
+          enabled: false,
+          text: "Game in progress..."
+        })
+      : GameConsole.ButtonField({
+          onClick: this.props.onStartGame,
+          enabled: this.props.num_players >= 3,
+          text: this.props.num_players >= 3 ?
+            'Start Game!' : 'Waiting for players...'
+        }),
+      GameConsole.PropertyField({
+        onChange: this.props.onSelectUsername,
+        header: 'Hello, my name is',
+        editable: true,
+        value: this.props.username
+      }),
+      GameConsole.PropertyField({
+        onChange: this.props.onSelectRoom,
+        header: 'I\'m having fun in',
+        editable: true,
+        value: this.props.room
+      })
+    ];
+
+    if (typeof this.props.word != 'undefined') {
+      children.push(GameConsole.PropertyField({
+        onChange: function() {},
+        header: 'Your word',
+        editable: false,
+        value: this.props.word
+      }));
+    }
     return React.DOM.div({
       className: 'game-console',
-      children: [
-        !this.props.waiting_to_start ? '' :
-          GameConsole.ButtonField({
-            onClick: this.props.onStartGame,
-            enabled: this.props.num_players >= 3,
-            text: this.props.num_players >= 3 ?
-              'Start Game!' : 'Waiting for players...'
-          }),
-        GameConsole.PropertyField({
-          onChange: this.props.onSelectUsername,
-          header: 'Hello, my name is',
-          editable: true,
-          value: this.props.username
-        }),
-        GameConsole.PropertyField({
-          onChange: this.props.onSelectRoom,
-          header: 'I\'m having fun in',
-          editable: true,
-          value: this.props.room
-        }),
-        GameConsole.PropertyField({
-          onChange: function() {},
-          header: 'Time Remaining',
-          editable: false,
-          value: '3:00'
-        }),
-        GameConsole.PropertyField({
-          onChange: function() {},
-          header: 'Whose turn is it??',
-          editable: false,
-          value: 'dunno'
-        })
-      ]
+      children: children
     });
   }
 });

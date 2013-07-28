@@ -4,6 +4,8 @@ __session = {
   room_name: 'lobby',
   player_type: null,
   num_players: 0,
+  in_progress: false,
+  word: null,
   setRoomName: function(room_name) {
     var old_room_name = this.room_name;
     if (room_name != 'lobby') {
@@ -26,12 +28,6 @@ __session = {
   },
   getUserName: function() {
     return this.user_name;
-  },
-  setWord: function() {
-
-  },
-  clearWord: function() {
-
   },
   canvas: {
     drawing_ref: new Firebase('https://drawingbee.firebaseio.com/drawings'),
@@ -70,22 +66,29 @@ __session = {
   },
   game: {
     renderConsole: function() {
+      var props = {
+        onSelectUsername: function(name) {
+          __session.setUserName(name);
+        },
+        onSelectRoom: function(room) {
+          __session.setRoomName(room);
+        },
+        onStartGame: function() {
+          __session.socket.emit('start');
+        },
+        username: __session.getUserName(),
+        room: __session.getRoomName(),
+        waiting_to_start: __session.getRoomName() !== "lobby",
+        num_players: __session.num_players,
+        in_progress: __session.in_progress
+      };
+
+      if (__session.word != null) {
+        props.word = __session.word;
+      }
+
       React.renderComponent(
-        GameConsole({
-          onSelectUsername: function(name) {
-            __session.setUserName(name);
-          },
-          onSelectRoom: function(room) {
-            __session.setRoomName(room);
-          },
-          onStartGame: function() {
-            __session.socket.emit('start');
-          },
-          username: __session.getUserName(),
-          room: __session.getRoomName(),
-          waiting_to_start: __session.getRoomName() !== "lobby",
-          num_players: __session.num_players
-        }),
+        GameConsole(props),
         document.getElementById('react_game_console')
       );
     },
@@ -94,23 +97,28 @@ __session = {
       this.renderConsole();
 
       __session.socket.on('started', function() {
-        if (__session.player_type == 'drawer0' || __session.player_type == 'drawer1') {
-          __session.socket.on('word', function(word) {
-            __session.setWord(word);
-          });
-          __session.socket.emit('getWord');
-        }
+        __session.in_progress = true;
+        me.renderConsole();
       });
 
       __session.socket.on('playerType', function(type) {
         __session.player_type = type;
+        if (__session.player_type == 'drawer0' || __session.player_type == 'drawer1') {
+          __session.socket.on('word', function(word) {
+            __session.word = word;
+            me.renderConsole();
+          });
+          __session.socket.emit('getWord');
+        }
       });
       // on joined, count >= 3, enable button, on count < 3, disable button
 
       __session.socket.on('winner', function(winner) {
         console.log("winner: " + winner);
         // do something with winner!
-        __session.clearWord();
+        __session.in_progress = false;
+        __session.word = null;
+        me.renderConsole();
       });
 
       __session.socket.on('players', function(data) {

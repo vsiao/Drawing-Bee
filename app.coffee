@@ -36,6 +36,9 @@ io.sockets.on 'connection', (socket) ->
 
     socket.join room
 
+    db.get "drawingbee:#{room}:in_progress", (err, in_progress) ->
+      socket.emit 'playerType', 'guesser' if in_progress
+
     io.sockets.in(room).emit 'players',
       count: io.sockets.clients(room).length
 
@@ -58,13 +61,17 @@ io.sockets.on 'connection', (socket) ->
     socket.get 'room', (err, room) ->
       io.sockets.in(room).emit 'started'
       setupWord room
+      db.set "drawingbee:#{room}:in_progress", true
 
       sockets = io.sockets.clients(room)
       drawers = sockets.sample_n 2
       guessers = sockets.diff drawers
 
       # tell everyone what they are
-      d.emit 'playerType', "drawer#{i}" for d, i in drawers
+      for d, i in drawers
+        d.emit 'playerType', "drawer#{i}"
+        d.set 'drawer', i
+
       g.emit 'playerType', 'guesser' for g in guessers
 
       # tell everyone whose turn it is!
@@ -81,6 +88,7 @@ io.sockets.on 'connection', (socket) ->
               socket.get 'username', (err, username) ->
                 io.sockets.in(room).emit 'winner', username,
                   word: word
+                db.del "drawingbee:#{room}:in_progress"
                 db.del "drawingbee:#{room}:word"
             else
               console.log "guessed #{guessWord} incorrectly"
