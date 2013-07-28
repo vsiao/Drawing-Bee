@@ -14,12 +14,26 @@ var GameConsole = React.createClass({
         GameConsole.PropertyField({
           onChange: this.props.onSelectUsername,
           header: 'Hello, my name is',
+          editable: true,
           value: this.props.username
         }),
         GameConsole.PropertyField({
           onChange: this.props.onSelectRoom,
           header: 'I\'m having fun in',
+          editable: true,
           value: this.props.room
+        }),
+        GameConsole.PropertyField({
+          onChange: function() {},
+          header: 'Time Remaining',
+          editable: false,
+          value: '3:00'
+        }),
+        GameConsole.PropertyField({
+          onChange: function() {},
+          header: 'Whose turn is it??',
+          editable: false,
+          value: 'dunno'
         })
       ]
     });
@@ -38,7 +52,8 @@ GameConsole.PropertyField = React.createClass({
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
     header: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired
+    value: React.PropTypes.string.isRequired,
+    editable: React.PropTypes.bool
   },
 
   componentDidUpdate: function(prevProps, prevState, rootNode) {
@@ -49,33 +64,37 @@ GameConsole.PropertyField = React.createClass({
 
   render: function() {
     var me = this;
-    var input = React.DOM.input({
-      className: 'property-input',
-      ref: 'input',
-      value: this.state.input_value,
-      onKeyDown: function(event) {
-        if (event.keyCode === /*ENTER*/13) {
-          me.props.onChange(
-            me.refs['input'].getDOMNode().value);
-          me.setState({editing: false});
+    var input = '';
+    var edit_button = '';
+    if (this.props.editable) {
+      var input = React.DOM.input({
+        className: 'property-input',
+        ref: 'input',
+        value: this.state.input_value,
+        onKeyDown: function(event) {
+          if (event.keyCode === /*ENTER*/13) {
+            me.props.onChange(
+              me.refs['input'].getDOMNode().value);
+            me.setState({editing: false});
+          }
+        },
+        onChange: function() {
+          me.setState({
+            input_value: me.refs['input'].getDOMNode().value
+          });
         }
-      },
-      onChange: function() {
-        me.setState({
-          input_value: me.refs['input'].getDOMNode().value
-        });
-      }
-    });
-    var edit_button = React.DOM.a({
-      className: 'property-edit',
-      href: '#',
-      onClick: function() {
-        me.setState({
-          editing: true,
-          input_value: me.props.value
-        });
-      }
-    }, 'Edit');
+      });
+      var edit_button = React.DOM.a({
+        className: 'property-edit',
+        href: '#',
+        onClick: function() {
+          me.setState({
+            editing: true,
+            input_value: me.props.value
+          });
+        }
+      }, 'Edit');
+    }
 
     return React.DOM.div({
       className: 'property',
