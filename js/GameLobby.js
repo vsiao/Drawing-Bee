@@ -18,13 +18,11 @@ function GameLobby($scope) {
 
   $scope.setUsername = function() {
     $scope.showUsernameForm = false;
-    __session.user_name = $scope.username;
-    __session.initialize();
+    __session.setUsername($scope.username);
   }
 
   $scope.setRoom = function() {
     $scope.showRoomNameForm = false;
     __session.setRoomName($scope.roomName);
-    __session.initialize();
   }
 };

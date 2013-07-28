@@ -1,5 +1,4 @@
 __session = {
-  chat_ref: new Firebase('https://drawingbee.firebaseio.com/chats'),
   drawing_ref: new Firebase('https://drawingbee.firebaseio.com/drawings'),
   chat_messages: [],
   user_name: 'user ' + Math.floor(Math.random() * 1000),
@@ -7,26 +6,36 @@ __session = {
   setRoomName: function(room_name) {
     this.room_name = room_name;
   },
+  setUserName: function(user_name) {
+    this.user_name = user_name;
+  },
   writeStroke: function(stroke) {
     var room_ref = this.drawing_ref.child(this.room_name);
     room_ref.push({author: this.user_name, stroke: stroke});
   },
-  writeChat: function(text) {
-    var room_ref = this.chat_ref.child(this.room_name);
-    room_ref.push({author: this.user_name, body: text});
-  },
-  initialize: function() {
-    var roomRef = this.chat_ref.child(this.room_name);
-    this.chat_messages = [];
-    if (this.callback) {
-      this.callback([]);
-    }
-    roomRef.off();
-    roomRef.on('child_added', function(snapshot) {
-      this.chat_messages.push(snapshot.val());
+  chat: {
+    chat_ref: new Firebase('https://drawingbee.firebaseio.com/chats'),
+    setCallback: function(callback) {
+      this.callback = callback;
+      this.initialize();
+    },
+    write: function(text) {
+      var room_ref = this.chat_ref.child(__session.room_name);
+      room_ref.push({author: __session.user_name, body: text});
+    },
+    initialize: function() {
+      var room_ref = this.chat_ref.child(__session.room_name);
+      this.messages = [];
       if (this.callback) {
-        this.callback(this.chat_messages);
+        this.callback([]);
       }
-    }.bind(this));
+      room_ref.off();
+      room_ref.on('child_added', function(snapshot) {
+        this.messages.push(snapshot.val());
+        if (this.callback) {
+          this.callback(this.messages);
+        }
+      }.bind(this));
+    }
   }
 };

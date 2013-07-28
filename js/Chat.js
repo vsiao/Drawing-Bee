@@ -8,7 +8,7 @@ var ChatInput = React.createClass({
     if (event.keyCode === /*ENTER*/13) {
       var message = this.refs['chat_input'].getDOMNode().value;
       this.refs['chat_input'].getDOMNode().value = '';
-      __session.writeChat(message);
+      __session.chat.write(message);
     }
   },
 
@@ -85,5 +85,4 @@ function updateChat(chat_messages) {
   );
 }
 
-__session.callback = updateChat;
-__session.initialize();
+__session.chat.setCallback(updateChat);
