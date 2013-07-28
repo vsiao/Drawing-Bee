@@ -81,7 +81,7 @@ io.sockets.on 'connection', (socket) ->
         zeros_turn = !zeros_turn
         io.sockets.in(room).emit 'turn', "drawer#{if zeros_turn then 0 else 1}"
       give_turns()
-      setInterval give_turns, 10000
+      setInterval give_turns, 5000
 
   socket.on 'guess', (guessWord) ->
     socket.get 'room', (err, room) ->
