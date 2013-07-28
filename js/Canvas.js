@@ -28,7 +28,7 @@ var Canvas = {
     me._context = canvas.getContext('2d');
     me._canvas.addEventListener('mousedown', function(event) {
       event.preventDefault(); // don't begin selection
-      if (!this._can_draw) {
+      if (!me._can_draw) {
         return;
       }
       canvas_rect = me._canvas.getBoundingClientRect();
@@ -42,7 +42,7 @@ var Canvas = {
       me.endStroke();
     });
     me._canvas.addEventListener('mousemove', function(event) {
-      if (!this._can_draw || !me._drawing || !me._stroke_ref) {
+      if (!me._can_draw || !me._drawing || !me._stroke_ref) {
         return;
       }
       canvas_rect = me._canvas.getBoundingClientRect();
