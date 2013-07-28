@@ -123,6 +123,7 @@ __session = {
             messages: messages,
             onSubmitMessage: function(message) {
               me.room_ref.push({author: __session.getUserName(), body: message});
+              __session.socket.emit('guess', message);
             }
           }),
           document.getElementById('react_sidebar')
