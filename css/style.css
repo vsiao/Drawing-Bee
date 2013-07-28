@@ -8,6 +8,10 @@ body {
   font-family: 'Roboto', Verdana, Helvetica, Arial, sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
 input {
   border: none;
   font-family: 'Roboto', Verdana, Helvetica, Arial, sans-serif;
@@ -47,7 +51,31 @@ input {
 #react_sidebar {
   background: #203732;
   display: -webkit-box;
+  position: relative;
   width: 20%;
+}
+
+.start-game {
+  background: rgba(56,121,108,0.8);
+  left: 0;
+  padding: 10px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+.start-game-button {
+  background: #37aa93;
+  border-radius: 3px;
+  color: #fff;
+  display: inline-block;
+  font-size: 18px;
+  padding: 8px 12px;
+  text-shadow: 0 1px 0 #192321;
+  transition: box-shadow 0.2s linear;
+}
+.start-game-button:hover {
+  box-shadow: 0 0 3px 1px #192321;
 }
 
 .chat-container {

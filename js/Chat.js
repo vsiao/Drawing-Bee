@@ -63,8 +63,9 @@ var Sidebar = React.createClass({
           children: [
             React.DOM.a({
               className: 'start-game-button',
-              onClick: this.startGame
-            })
+              onClick: this.startGame,
+              href: '#'
+            }, 'Start Game!')
           ]
         }),
         React.DOM.ul({
