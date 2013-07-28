@@ -51,7 +51,8 @@ var Chat = React.createClass({
   },
 
   componentDidUpdate: function(prevProps, prevState, rootNode) {
-    rootNode.scrollTop = rootNode.scrollHeight;
+    var messages_container = this.refs['chat_messages'].getDOMNode();
+    messages_container.scrollTop = messages_container.scrollHeight;
   },
 
   render: function() {
@@ -60,6 +61,7 @@ var Chat = React.createClass({
       children: [
         React.DOM.ul({
           className: 'chat-messages',
+          ref: 'chat_messages',
           children: this.props.messages.map(function(message) {
             return ChatMessage({
               author: message.author,

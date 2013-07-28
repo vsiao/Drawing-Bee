@@ -47,22 +47,23 @@ input {
 #react_chat {
   background: #203732;
   display: -webkit-box;
-  -webkit-box-orient: vertical;
   width: 20%;
 }
 
 .chat-container {
   background: #203732;
   border-left: 1px solid #27594f;
+  -webkit-box-flow: 1;
+  -webkit-box-orient: vertical;
   box-shadow: 1px 0 1px 0 #192321 inset;
-  -webkit-box-flex: 1;
-  overflow-y: auto;
+  display: -webkit-box;
   width: 100%;
 }
 
 .chat-messages {
+  -webkit-box-flex: 1;
   color: #c2eae2;
-  margin-bottom: 50px;
+  overflow-y: auto;
 }
 
 .chat-message {
@@ -81,11 +82,9 @@ input {
 
 .chat-input-container {
   background: #fff;
-  bottom: 0;
   box-shadow: 0 1px 2px 0 #fff;
   display: -webkit-box;
   height: 50px;
-  position: fixed;
   width: 100%;
 }
 
