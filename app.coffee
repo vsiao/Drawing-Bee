@@ -76,10 +76,11 @@ io.sockets.on 'connection', (socket) ->
 
       # tell everyone whose turn it is!
       zeros_turn = true
-      setInterval ->
+      give_turns = ->
         zeros_turn = !zeros_turn
         io.sockets.in(room).emit 'turn', "drawer#{if zeros_turn then 0 else 1}"
-      , 10000
+      give_turns()
+      setInterval give_turns, 10000
 
   socket.on 'guess', (guessWord) ->
     socket.get 'room', (err, room) ->

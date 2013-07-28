@@ -111,6 +111,15 @@ __session = {
           __session.socket.emit('getWord');
         }
       });
+
+      __session.socket.on('turn', function(drawer) {
+        if (drawer == __session.player_type) {
+          Canvas.enable();
+        } else {
+          Canvas.disable();
+        }
+      });
+
       // on joined, count >= 3, enable button, on count < 3, disable button
 
       __session.socket.on('winner', function(winner) {
