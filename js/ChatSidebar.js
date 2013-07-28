@@ -65,6 +65,10 @@ var ChatSidebar = React.createClass({
     // start the friggin game
   },
 
+  onClick: function() {
+    document.getElementsByClassName('chat-input')[0].focus()
+  },
+
   render: function() {
     return React.DOM.div({
       className: 'chat-container',
@@ -88,7 +92,8 @@ var ChatSidebar = React.createClass({
               body: message.body,
               onRemove: message.onRemove
             });
-          })
+          }),
+          onClick: this.onClick
         }),
         React.DOM.div({className: 'chat-input-container'},
           ChatInput({onSubmit: this.props.onSubmitMessage}))
