@@ -14,7 +14,7 @@ var ChatInput = React.createClass({
     if (event.keyCode === /*ENTER*/13) {
       // TODO firebase me
       var message = this.refs['chat_input'].getDOMNode().value;
-      FB.writeChat(message);
+      __session.writeChat(message);
       chat_messages.push({
         author: this.props.author,
         body: message
@@ -86,5 +86,5 @@ function updateChat(chat_messages) {
   );
 }
 
-FB.callback = updateChat;
-FB.initialize();
+__session.callback = updateChat;
+__session.initialize();

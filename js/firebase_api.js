@@ -1,4 +1,4 @@
-FB = {
+__session = {
   chatRef: new Firebase('https://drawingbee.firebaseio.com/chats'),
   drawingRef: new Firebase('https://drawingbee.firebaseio.com/drawings'),
   chatMessages: [],
