@@ -59,6 +59,22 @@ __session = {
       }.bind(this));
     }
   },
+  game: {
+    initialize: function(GameConsole) {
+      var render = function() {
+        React.renderComponent(
+          GameConsole({
+            onSelectUsername: function() {
+            },
+            onSelectRoom: function() {
+            }
+          }),
+          document.getElementById('react_game_console')
+        );
+      };
+      render();
+    }
+  },
   chat: {
     chat_ref: new Firebase('https://drawingbee.firebaseio.com/chats'),
     write: function(text) {
