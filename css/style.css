@@ -1,13 +1,15 @@
 /**
 GREENS
+bright_text: #c2eae2;
 dark_bg: #203732;
-shadow: #192321;
-highlight: #28433e;
-light_text: #c2eae2;
+dark_shadow: #192321;
+dark_highlight: #28433e;
+light_bg: #37aa93;
+light_shadow: #8bddcd;
 */
 
 body {
-  background: #daf3ee;
+  background: #333;
   font-family: 'Roboto', Verdana, Helvetica, Arial, sans-serif;
 }
 
@@ -41,8 +43,9 @@ input {
 }
 
 #react_game_console {
-  background: #cc3edd;
-  border-right: 1px solid #fff;
+  background: #37aa93;
+  border-right: 1px solid #203732;
+  box-shadow: 0 0 5px 1px #000;
   position: relative;
 }
 
@@ -50,7 +53,7 @@ input {
 }
 
 .user-info {
-  border-bottom: 1px solid #9f27ad;
+  border-bottom: 1px solid #203732;
   color: #ffffff;
   text-align: center;
   padding-bottom: 10px;
@@ -58,24 +61,24 @@ input {
 }
 
 .username-header {
-  border-bottom: 1px solid #d34ee3;
-  color: #f070ff;
+  border-bottom: 1px solid #8bddcd;
+  color: #c2eae2;
   font-size: 20px;
   font-weight: 700;
   padding: 10px 0 5px;
   margin: 0 15px 8px;
-  text-shadow: 0 2px 0 #9f27ad;
+  text-shadow: 0 2px 0 #203732;
   text-transform: uppercase;
 }
 
 .username-edit {
   top: 33px;
-  color: #f070ff;
+  color: #8bddcd;
   font-size: 10px;
   font-weight: 700;
   position: absolute;
   right: 15px;
-  text-shadow: 0 1px 0 #9f27ad;
+  text-shadow: 0 1px 0 #203732;
   text-transform: uppercase;
   transition: color 0.1s linear;
 }
@@ -84,18 +87,18 @@ input {
 }
 
 .room-info {
-  border-top: 1px solid #d34ee3;
+  border-top: 1px solid #8bddcd;
 }
 
 #canvas {
   background: #fff;
   border: 10px solid #ccc;
   border-radius: 5px;
-  box-shadow: 0 0 2px 0 #203732;
+  box-shadow: 0 0 10px 0 #000;
 }
 
 #react_sidebar {
-  border-left: 1px solid #fff;
+  border-left: 1px solid #222;
   background: #203732;
   display: -webkit-box;
   position: relative;
