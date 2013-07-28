@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="container" ng-app>
-    <div class="js-game-lobby" ng-controller="GameLobby" ng-show="showLobby()">
+    <div class="js-game-lobby" ng-controller="GameLobby">
       <div class="js-choose-username-form">
         <a href="#" ng-click="showUsernameForm = !showUsernameForm">change username</a>
         <form ng-submit="setUsername()" ng-show="showUsernameForm">
