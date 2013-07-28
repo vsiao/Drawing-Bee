@@ -149,7 +149,6 @@ input {
 }
 .property.alert {
   -webkit-animation: flashalert 1s infinite;
-  border-bottom: red;
 }
 
 .property-header {
