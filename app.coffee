@@ -1,6 +1,7 @@
 express = require 'express'
 redis = require 'redis'
-db = redis.createClient()
+db = redis.createClient('6379', 'nodejitsudb5720544143.redis.irstack.com')
+db.auth('nodejitsudb5720544143.redis.irstack.com:f327cfe980c971946e80b8e975fbebb4')
 app = express()
 server = require('http').createServer app
 io = require('socket.io').listen server
