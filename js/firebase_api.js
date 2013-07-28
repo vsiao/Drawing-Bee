@@ -12,7 +12,6 @@ __session = {
   },
   setUserName: function(user_name) {
     this.user_name = user_name;
-    this.chat.initialize();
   },
   getUserName: function() {
     return this.user_name;
@@ -52,13 +51,18 @@ __session = {
   },
   game: {
     initialize: function(GameConsole) {
+      var me = this;
       var render = function() {
         React.renderComponent(
           GameConsole({
-            onSelectUsername: function() {
+            onSelectUsername: function(name) {
+              __session.setUserName(name);
+              render();
             },
             onSelectRoom: function() {
-            }
+            },
+            username: __session.getUserName(),
+            room: '',
           }),
           document.getElementById('react_game_console')
         );

@@ -1,6 +1,9 @@
 /**
+GREENS
 dark_bg: #203732;
 shadow: #192321;
+highlight: #28433e;
+light_text: #c2eae2;
 */
 
 body {
@@ -38,13 +41,50 @@ input {
 }
 
 #react_game_console {
-  background: #203732;
-  box-shadow: -2px 0 1px 0 #192321 inset;
+  background: #cc3edd;
+  border-right: 1px solid #fff;
   position: relative;
-  width: 200px;
 }
 
 .game-console {
+}
+
+.user-info {
+  border-bottom: 1px solid #9f27ad;
+  color: #ffffff;
+  text-align: center;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+.username-header {
+  border-bottom: 1px solid #d34ee3;
+  color: #f070ff;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 10px 0 5px;
+  margin: 0 15px 8px;
+  text-shadow: 0 2px 0 #9f27ad;
+  text-transform: uppercase;
+}
+
+.username-edit {
+  top: 33px;
+  color: #f070ff;
+  font-size: 10px;
+  font-weight: 700;
+  position: absolute;
+  right: 15px;
+  text-shadow: 0 1px 0 #9f27ad;
+  text-transform: uppercase;
+  transition: color 0.1s linear;
+}
+.username-edit:hover {
+  color: #fff;
+}
+
+.room-info {
+  border-top: 1px solid #d34ee3;
 }
 
 #canvas {
@@ -55,6 +95,7 @@ input {
 }
 
 #react_sidebar {
+  border-left: 1px solid #fff;
   background: #203732;
   display: -webkit-box;
   position: relative;
@@ -86,7 +127,6 @@ input {
 
 .chat-container {
   background: #203732;
-  border-left: 1px solid #27594f;
   -webkit-box-flow: 1;
   -webkit-box-orient: vertical;
   box-shadow: 2px 0 1px 0 #192321 inset;
@@ -127,6 +167,7 @@ input {
 
 .chat-input {
   -webkit-box-flex: 1;
+  box-shadow: 2px 0 2px 0 #192321 inset;
   display: block;
   height: 20px;
   padding: 5px 8px 25px 8px;
