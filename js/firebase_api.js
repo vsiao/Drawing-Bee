@@ -76,32 +76,26 @@ __session = {
     }
   },
   chat: {
-    chat_ref: new Firebase('https://drawingbee.firebaseio.com/chats'),
-    write: function(text) {
-      var room_ref = this.chat_ref.child(__session.room_name);
-      room_ref.push({author: __session.getUserName(), body: text});
-    },
     initialize: function(ChatSidebar) {
-      var me = this;
+      var messages = [],
+          room_ref = new Firebase('https://drawingbee.firebaseio.com/chats/' + __session.room_name);
       var render = function(messages) {
         React.renderComponent(
           ChatSidebar({
             messages: messages,
             onSubmitMessage: function(message) {
-              me.write(message);
+              room_ref.push({author: __session.getUserName(), body: message});
             }
           }),
           document.getElementById('react_sidebar')
         );
       };
-      var room_ref = this.chat_ref.child(__session.room_name);
-      this.messages = [];
       render([]);
       room_ref.off();
       room_ref.on('child_added', function(snapshot) {
-        this.messages.push(snapshot.val());
-        render(this.messages);
-      }.bind(this));
+        messages.push(snapshot.val());
+        render(messages);
+      });
     }
   }
 };
