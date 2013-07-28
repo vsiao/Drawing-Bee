@@ -125,7 +125,6 @@ __session = {
 
       __session.socket.on('turn', function(drawer) {
         __session.drawer = drawer;
-        Canvas.endStroke();
         if (drawer == __session.player_type) {
           Canvas.enable();
         } else {
