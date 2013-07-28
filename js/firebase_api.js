@@ -2,12 +2,29 @@ __session = {
   chat_messages: [],
   user_name: 'user ' + Math.floor(Math.random() * 1000),
   room_name: 'lobby',
+  game_position: 'not_playing',
   setRoomName: function(room_name) {
+    this.room.join(room_name);
     this.room_name = room_name;
+    this.chat.initialize();
   },
   setUserName: function(user_name) {
     this.user_name = user_name;
     this.chat.initialize();
+  },
+  getUserName: function() {
+    return this.user_name;
+  },
+  room: {
+    join: function(room_name) {
+      // TODO put something here
+    },
+    startGame: function() {
+      // TODO put something here
+    },
+    setCallback: function(callback) {
+      // TODO put something here
+    }
   },
   canvas: {
     drawing_ref: new Firebase('https://drawingbee.firebaseio.com/drawings'),
@@ -45,7 +62,7 @@ __session = {
     },
     write: function(text) {
       var room_ref = this.chat_ref.child(__session.room_name);
-      room_ref.push({author: __session.user_name, body: text});
+      room_ref.push({author: __session.getUserName(), body: text});
     },
     initialize: function() {
       var room_ref = this.chat_ref.child(__session.room_name);
