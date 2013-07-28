@@ -14,6 +14,7 @@ __session = {
     }
     this.room_name = room_name;
     this.canvas.refresh();
+    this.chat.initialize(ChatSidebar);
   },
   getRoomName: function() {
     return this.room_name;
