@@ -26,7 +26,8 @@ var ChatMessage = React.createClass({
 
   propTypes: {
     author: React.PropTypes.string.isRequired,
-    body: React.PropTypes.string.isRequired
+    body: React.PropTypes.string.isRequired,
+    onRemove: React.PropTypes.func
   },
 
   render: function() {
@@ -37,7 +38,12 @@ var ChatMessage = React.createClass({
           className: 'chat-author',
           children: [this.props.author]
         }),
-        this.props.body
+        this.props.body,
+        React.DOM.a({
+          className: 'chat-remove',
+          href: '#',
+          onClick: this.props.onRemove
+        }, 'x')
       ]
     });
   }
@@ -63,7 +69,7 @@ var ChatSidebar = React.createClass({
     return React.DOM.div({
       className: 'chat-container',
       children: [
-        React.DOM.div({
+        /* React.DOM.div({
           className: 'start-game',
           children: [
             React.DOM.a({
@@ -72,14 +78,15 @@ var ChatSidebar = React.createClass({
               href: '#'
             }, 'Start Game!')
           ]
-        }),
+        }), */
         React.DOM.ul({
           className: 'chat-messages',
           ref: 'chat_messages',
           children: this.props.messages.map(function(message) {
             return ChatMessage({
               author: message.author,
-              body: message.body
+              body: message.body,
+              onRemove: message.onRemove
             });
           })
         }),

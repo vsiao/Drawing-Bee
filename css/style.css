@@ -42,6 +42,22 @@ input {
   display: -webkit-box;
 }
 
+#canvas_container {
+  position: relative;
+}
+
+#color_palette {
+  left: 0;
+  position: absolute;
+  top: -20px;
+}
+
+.color-choice {
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+}
+
 #react_game_console {
   background: #37aa93;
   border-right: 1px solid #203732;
@@ -147,6 +163,7 @@ input {
   display: block;
   font-weight: 100;
   padding: 5px 8px;
+  position: relative;
   word-wrap: break-word;
 }
 
@@ -155,6 +172,20 @@ input {
   font-size: 12px;
   font-weight: 400;
   white-space: nowrap;
+}
+
+.chat-remove {
+  color: #28433e;
+  display: none;
+  font-size: 10px;
+  font-weight: 700;
+  left: 3px;
+  position: absolute;
+  top: 2px;
+}
+
+.chat-message:hover .chat-remove {
+  display: inline-block;
 }
 
 .chat-input-container {

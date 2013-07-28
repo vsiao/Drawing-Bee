@@ -1,10 +1,21 @@
 var Canvas = {
+
+  colors: [
+    '#ea1999', // hot pink
+    '#328eec', // blue
+    '#37aa93', // turquoise
+    '#32ec32', // poison green
+    '#ece532'  // sunshine yello
+  ],
+
   clear: function() {
     this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
   },
 
-  init: function(canvas) {
+  init: function(root, canvas) {
     var me = this;
+    me._makeColors(root);
+    me._color = me.colors[0];
     me._canvas = canvas;
     me._context = canvas.getContext('2d');
     me._canvas.addEventListener('mousedown', function(event) {
@@ -13,7 +24,7 @@ var Canvas = {
       me._stroke_ref = __session.canvas.startStroke({
         x: event.pageX - canvas_rect.left - 10,
         y: event.pageY - canvas_rect.top - 10,
-        style: '#ff0000'
+        style: me._color
       });
     });
     me._canvas.addEventListener('mouseup', function(event) {
@@ -26,11 +37,28 @@ var Canvas = {
       canvas_rect = me._canvas.getBoundingClientRect();
       __session.canvas.addToStroke({
         x: event.pageX - canvas_rect.left - 10,
-        y: event.pageY - canvas_rect.top - 10
+        y: event.pageY - canvas_rect.top - 10,
+        color: me._color
       }, me._stroke_ref);
     });
     this._context.lineWidth = 5;
     this._context.strokeStyle = "black";
+  },
+
+  _makeColors: function(root) {
+    var me = this;
+    var palette = document.createElement('div');
+    palette.id = 'color_palette';
+    this.colors.forEach(function(color) {
+      var node = document.createElement('a');
+      node.style.background = color;
+      node.className = 'color-choice';
+      node.onclick = function() {
+        me._color = color;
+      };
+      palette.appendChild(node);
+    });
+    root.appendChild(palette);
   },
 
   startStroke: function(coord) {
@@ -61,8 +89,9 @@ var Canvas = {
 };
 
 (function() {
+  var root = document.getElementById('canvas_container');
   var canvas = document.getElementById('canvas');
-  if (canvas) {
-    Canvas.init(canvas);
+  if (root && canvas) {
+    Canvas.init(root, canvas);
   }
 })();

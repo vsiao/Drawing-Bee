@@ -31,12 +31,10 @@ __session = {
       var me = this;
       var room_ref = this.drawing_ref.child(__session.room_name);
       var new_stroke_ref = room_ref.push();
-      console.log(" **** starting @[" + coords.x + ", " + coords.y + "] **** ");
       new_stroke_ref.push(coords);
       return new_stroke_ref;
     },
     addToStroke: function(coords, stroke_ref) {
-      console.log(" **** moving to [" + coords.x + ", " + coords.y + "] **** ");
       stroke_ref.push(coords);
     },
     refresh: function() {
@@ -129,7 +127,13 @@ __session = {
       render([]);
       room_ref.off();
       room_ref.on('child_added', function(snapshot) {
-        messages.push(snapshot.val());
+        var message = snapshot.val();
+        message.onRemove = function() {
+          snapshot.ref().remove();
+          messages.splice(messages.indexOf(message), 1);
+          render(messages);
+        };
+        messages.push(message);
         render(messages);
       });
     }
