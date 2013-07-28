@@ -1,9 +1,3 @@
-// TODO firebase me
-var chat_messages = [{
-  author: 'Vincent Siao',
-  body: 'Hello World!'
-}];
-
 var ChatInput = React.createClass({
 
   propTypes: {
@@ -12,19 +6,15 @@ var ChatInput = React.createClass({
 
   onKeyDown: function(event) {
     if (event.keyCode === /*ENTER*/13) {
-      // TODO firebase me
       var message = this.refs['chat_input'].getDOMNode().value;
-      __session.writeChat(message);
-      chat_messages.push({
-        author: this.props.author,
-        body: message
-      });
       this.refs['chat_input'].getDOMNode().value = '';
+      __session.writeChat(message);
     }
   },
 
   render: function() {
     return React.DOM.input({
+      className: 'chat-input',
       ref: 'chat_input',
       placeholder: 'Chat...',
       onKeyDown: this.onKeyDown

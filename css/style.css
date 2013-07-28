@@ -1,2 +1,36 @@
+body {
+  font-family: 'Roboto', Verdana, Helvetica, Arial, sans-serif;
+}
+
 #react_chat {
+  background: #203732;
+  border-left: 1px solid #27594f;
+  box-shadow: 1px 0 1px #192321 inset;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 20%;
+}
+
+.chat-messages {
+  border-bottom: 1px solid #28433e;
+  color: #c2eae2;
+}
+
+.chat-message {
+  border-top: 1px solid #28433e;
+  border-bottom: 1px solid #192321;
+  display: block;
+  font-weight: 100;
+  padding: 5px 8px;
+}
+
+.chat-author {
+  margin-right: 8px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.chat-input {
 }
