@@ -86,5 +86,5 @@ function updateChat(chat_messages) {
   );
 }
 
-FB.registerCallback(updateChat);
-updateChat([]);
+FB.callback = updateChat;
+FB.initialize();
