@@ -1,9 +1,5 @@
 var ChatInput = React.createClass({
 
-  propTypes: {
-    author: React.PropTypes.string.isRequired
-  },
-
   onKeyDown: function(event) {
     if (event.keyCode === /*ENTER*/13) {
       var message = this.refs['chat_input'].getDOMNode().value;
@@ -25,7 +21,7 @@ var ChatInput = React.createClass({
 var ChatMessage = React.createClass({
 
   propTypes: {
-    author: React.PropTypes.string.isRequired, // maybe make this a user class?
+    author: React.PropTypes.string.isRequired,
     body: React.PropTypes.string.isRequired
   },
 
@@ -43,10 +39,9 @@ var ChatMessage = React.createClass({
   }
 });
 
-var Chat = React.createClass({
+var Sidebar = React.createClass({
 
   propTypes: {
-    author: React.PropTypes.string.isRequired,
     messages: React.PropTypes.array.isRequired
   },
 
@@ -55,10 +50,23 @@ var Chat = React.createClass({
     messages_container.scrollTop = messages_container.scrollHeight;
   },
 
+  startGame: function() {
+    // start the friggin game
+  },
+
   render: function() {
     return React.DOM.div({
       className: 'chat-container',
       children: [
+        React.DOM.div({
+          className: 'start-game',
+          children: [
+            React.DOM.a({
+              className: 'start-game-button',
+              onClick: this.startGame
+            })
+          ]
+        }),
         React.DOM.ul({
           className: 'chat-messages',
           ref: 'chat_messages',
@@ -71,19 +79,17 @@ var Chat = React.createClass({
         }),
         React.DOM.div({
           className: 'chat-input-container',
-          children: [
-            ChatInput({author: this.props.author})
-          ]
+          children: [ChatInput()]
         })
       ]
     });
   }
 });
 
-function updateChat(chat_messages) {
+function updateChat(props) {
   React.renderComponent(
-    Chat({author: 'Vincent Siao', messages: chat_messages}),
-    document.getElementById('react_chat')
+    Sidebar(props),
+    document.getElementById('react_sidebar')
   );
 }
 

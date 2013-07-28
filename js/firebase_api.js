@@ -51,13 +51,13 @@ __session = {
       var room_ref = this.chat_ref.child(__session.room_name);
       this.messages = [];
       if (this.callback) {
-        this.callback([]);
+        this.callback({messages: []});
       }
       room_ref.off();
       room_ref.on('child_added', function(snapshot) {
         this.messages.push(snapshot.val());
         if (this.callback) {
-          this.callback(this.messages);
+          this.callback({messages: this.messages});
         }
       }.bind(this));
     }
