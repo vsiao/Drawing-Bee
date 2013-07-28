@@ -10,6 +10,10 @@ app.use express.static __dirname
 app.use app.router
 
 Array::sample = () -> this[Math.floor(Math.random()*this.length)]
+Array::sample_n = (n) ->
+  [].concat.apply [], (this.splice(Math.random()*this.length,1) for i in [1..n])
+Array::diff = (arr) ->
+  this.filter (i) -> !(arr.indexOf(i) > -1)
 
 words = [
   "derp"
@@ -21,32 +25,25 @@ words = [
 , "greylock"
 ]
 
-setupWords = (room) ->
-  word0 = words.sample()
-  word1 = words.sample()
-
-  db.set "drawingbee:#{room}:word0", word0
-  db.set "drawingbee:#{room}:word1", word1
+setupWord = (room) ->
+  word = words.sample()
+  db.set "drawingbee:#{room}:word", word
 
 io.sockets.on 'connection', (socket) ->
   socket.on 'join', (room, username) ->
     socket.set 'username', username
     socket.set 'room', room
 
-    client_count = io.sockets.clients(room).length
-
-    if client_count < 2
-      socket.set 'drawer', client_count
-      socket.emit 'playerType', "drawer#{client_count}"
-    else
-      socket.emit 'playerType', "guesser"
-
     socket.join room
-    socket.emit 'joined',
-      count: client_count + 1
+
+    io.sockets.in(room).emit 'players',
+      count: io.sockets.clients(room).length
 
   socket.on 'leave', (room) ->
     socket.leave room
+
+    io.sockets.in(room).emit 'players',
+      count: io.sockets.clients(room).length
 
   socket.on 'getWord', ->
     socket.get 'room', (err, room) ->
@@ -61,6 +58,15 @@ io.sockets.on 'connection', (socket) ->
     socket.get 'room', (err, room) ->
       io.sockets.in(room).emit 'started'
       setupWord room
+
+      sockets = io.sockets.clients(room)
+      drawers = sockets.sample_n 2
+      guessers = sockets.diff drawers
+
+      # tell everyone what they are
+
+      d.emit 'playerType', "drawer#{i}" for d, i in drawers
+      g.emit 'playerType', 'guesser' for g in guessers
 
       # tell everyone whose turn it is!
       zeros_turn = true
@@ -79,6 +85,12 @@ io.sockets.on 'connection', (socket) ->
                 db.del "drawingbee:#{room}:word"
             else
               console.log "guessed #{guessWord} incorrectly"
+
+  socket.on 'disconnect', ->
+    socket.get 'room', (err, room) ->
+      io.sockets.in(room).emit 'players',
+        count: io.sockets.clients(room).length - 1
+
 
 server.listen 3000
 console.log "Listening on port 3000"
