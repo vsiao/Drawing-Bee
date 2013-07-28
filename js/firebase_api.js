@@ -47,9 +47,14 @@ __session = {
     initialize: function() {
       var room_ref = this.drawing_ref.child(__session.room_name);
       room_ref.off();
+      room_ref.on('child_changed', function(snapshot) {
+        if (this.callback) {
+          this.callback(snapshot.name(), snapshot.val());
+        }
+      }.bind(this));
       room_ref.on('child_added', function(snapshot) {
         if (this.callback) {
-          this.callback(snapshot.val());
+          this.callback(snapshot.name(), snapshot.val());
         }
       }.bind(this));
     }
