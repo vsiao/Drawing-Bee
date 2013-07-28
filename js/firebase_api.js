@@ -2,7 +2,7 @@ __session = {
   chatRef: new Firebase('https://drawingbee.firebaseio.com/chats'),
   drawingRef: new Firebase('https://drawingbee.firebaseio.com/drawings'),
   chatMessages: [],
-  userName: 'username',
+  userName: null,
   roomName: 'roomname',
   writeChat: function(text) {
     var room_ref = this.chatRef.child(this.roomName);

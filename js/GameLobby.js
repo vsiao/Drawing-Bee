@@ -14,6 +14,6 @@ function GameLobby($scope) {
   ];
 
   $scope.showLobby = function() {
-    return (typeof __session.username != "undefined");
+    return __session.userName != null;
   }
 };
