@@ -76,12 +76,19 @@ io.sockets.on 'connection', (socket) ->
       g.emit 'playerType', 'guesser' for g in guessers
 
       # tell everyone whose turn it is!
-      zeros_turn = true
+      scope = {
+        zeros_turn: true,
+        penis: false
+      }
       give_turns = ->
-        zeros_turn = !zeros_turn
-        io.sockets.in(room).emit 'turn', "drawer#{if zeros_turn then 0 else 1}"
+        console.log 'giving turns'
+        scope.zeros_turn = !scope.zeros_turn
+        io.sockets.in(room).emit 'turn', "drawer#{if scope.zeros_turn then 0 else 1}"
       give_turns()
-      setInterval give_turns, 5000
+      socket.on 'strokeDone', ->
+        console.log 'strokeDone'
+        socket.emit 'fuckYou'
+        give_turns()
 
   socket.on 'guess', (guessWord) ->
     socket.get 'room', (err, room) ->

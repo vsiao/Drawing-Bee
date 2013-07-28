@@ -35,7 +35,8 @@ var Canvas = {
       me._stroke_ref = __session.canvas.startStroke({
         x: event.pageX - canvas_rect.left - 10,
         y: event.pageY - canvas_rect.top - 10,
-        style: me._color
+        style: me._color,
+        author: __session.user_name
       });
     });
     me._canvas.addEventListener('mouseup', function(event) {
@@ -85,7 +86,7 @@ var Canvas = {
     if (this._drawing) {
       this.endStroke();
     }
-    this._drawing = true;
+    this._drawing = coord.author;
     this._context.strokeStyle = coord.style;
     this._context.moveTo(coord.x, coord.y);
     this._context.beginPath();
@@ -95,7 +96,10 @@ var Canvas = {
     if (!this._drawing) {
       return;
     }
-    this._drawing = false;
+    if (__session.user_name == this._drawing) {
+      __session.game.finish_stroke();
+    }
+    this._drawing = null;
     this._context.closePath();
   },
 

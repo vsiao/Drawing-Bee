@@ -176,6 +176,10 @@ __session = {
     join: function(room_name) {
       __session.socket.emit('join', room_name, __session.user_name);
     },
+    finish_stroke: function(room_name) {
+      console.log('finishing stroke');
+      __session.socket.emit('strokeDone');
+    },
     leave: function(room_name) {
       __session.socket.emit('leave', room_name);
     },
