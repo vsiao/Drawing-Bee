@@ -15,7 +15,7 @@ var Canvas = {
       me.endStroke();
     });
     me._canvas.addEventListener('mousemove', function(event) {
-      if (!me._drawing) {
+      if (!me._drawing || !me._stroke_ref) {
         return;
       }
       canvas_rect = me._canvas.getBoundingClientRect();

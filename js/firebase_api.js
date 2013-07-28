@@ -24,10 +24,6 @@ __session = {
       var new_stroke_ref = room_ref.push();
       console.log(" **** starting @[" + coords.x + ", " + coords.y + "] **** ");
       new_stroke_ref.push(coords);
-      new_stroke_ref.on('child_added', function(snapshot) {
-        me.canvas.moveStroke(snapshot.val());
-      });
-      me.canvas.startStroke(coords);
       return new_stroke_ref;
     },
     addToStroke: function(coords, stroke_ref) {
@@ -47,7 +43,6 @@ __session = {
             Canvas.moveStroke(coord_thing.val());
           }
         });
-        Canvas.endStroke();
       });
     }
   },
