@@ -29,15 +29,10 @@ __session = {
     },
     initialize: function() {
       var room_ref = this.drawing_ref.child(__session.room_name);
-      this.messages = [];
-      if (this.callback) {
-        this.callback([]);
-      }
       room_ref.off();
       room_ref.on('child_added', function(snapshot) {
-        this.messages.push(snapshot.val());
         if (this.callback) {
-          this.callback(this.messages);
+          this.callback(snapshot.val());
         }
       }.bind(this));
     }
