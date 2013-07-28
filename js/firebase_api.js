@@ -109,24 +109,28 @@ __session = {
     }
   },
   chat: {
+    room_ref: null,
     initialize: function(ChatSidebar) {
-      var messages = [];
-      var room_ref = new Firebase(
+      var messages = [],
+          me = this;
+      if (this.room_ref) {
+        this.room_ref.off();
+      }
+      this.room_ref = new Firebase(
           'https://drawingbee.firebaseio.com/chats/' + __session.room_name);
       var render = function(messages) {
         React.renderComponent(
           ChatSidebar({
             messages: messages,
             onSubmitMessage: function(message) {
-              room_ref.push({author: __session.getUserName(), body: message});
+              me.room_ref.push({author: __session.getUserName(), body: message});
             }
           }),
           document.getElementById('react_sidebar')
         );
       };
       render([]);
-      room_ref.off();
-      room_ref.on('child_added', function(snapshot) {
+      this.room_ref.on('child_added', function(snapshot) {
         var message = snapshot.val();
         message.onRemove = function() {
           snapshot.ref().remove();
