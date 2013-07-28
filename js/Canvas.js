@@ -12,7 +12,8 @@ var Canvas = {
       canvas_rect = me._canvas.getBoundingClientRect();
       me._stroke_ref = __session.canvas.startStroke({
         x: event.pageX - canvas_rect.left - 10,
-        y: event.pageY - canvas_rect.top - 10
+        y: event.pageY - canvas_rect.top - 10,
+        style: '#ff0000'
       });
     });
     me._canvas.addEventListener('mouseup', function(event) {
@@ -37,6 +38,7 @@ var Canvas = {
       this.endStroke();
     }
     this._drawing = true;
+    this._context.strokeStyle = coord.style;
     this._context.moveTo(coord.x, coord.y);
     this._context.beginPath();
   },
