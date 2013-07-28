@@ -2,7 +2,7 @@ __session = {
   drawing_ref: new Firebase('https://drawingbee.firebaseio.com/drawings'),
   chat_messages: [],
   user_name: 'user ' + Math.floor(Math.random() * 1000),
-  room_name: 'roomname',
+  room_name: 'lobby',
   setRoomName: function(room_name) {
     this.room_name = room_name;
   },
