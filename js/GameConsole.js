@@ -127,7 +127,7 @@ GameConsole.PropertyField = React.createClass({
 GameConsole.PropertyTimerField = React.createClass({
   getInitialState: function() {
     return {
-      time_remaining: 800,
+      time_remaining: 400,
       timer: null
     };
   },
@@ -137,7 +137,7 @@ GameConsole.PropertyTimerField = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    this.setState({time_remaining: 800});
+    this.setState({time_remaining: 400});
   },
 
   render: function() {
