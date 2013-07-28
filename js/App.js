@@ -62,6 +62,10 @@ __session = {
     initialize: function(Canvas) {
       this.canvas = Canvas;
       this.refresh();
+    },
+    reset: function() {
+      this.canvas.clear();
+      this.drawing_room_ref.set(null);
     }
   },
   game: {
@@ -120,24 +124,26 @@ __session = {
         }
       });
 
-      // on joined, count >= 3, enable button, on count < 3, disable button
-
-      __session.socket.on('winner', function(winner) {
-        console.log("winner: " + winner);
+      __session.socket.on('winner', function(winner, word) {
         // do something with winner!
+        alert("Winner: " + winner + " with word " + word);
         __session.in_progress = false;
         __session.word = null;
+        __session.canvas.reset();
         me.renderConsole();
       });
 
+      // on joined, count >= 3, enable button, on count < 3, disable button
       __session.socket.on('players', function(data) {
+        if (__session.num_players == 0) {
+          __session.canvas.reset();
+        }
         __session.num_players = data.count;
         me.renderConsole();
       });
     },
     join: function(room_name) {
       __session.socket.emit('join', room_name, __session.user_name);
-      
     },
     leave: function(room_name) {
       __session.socket.emit('leave', room_name);

@@ -87,8 +87,7 @@ io.sockets.on 'connection', (socket) ->
       db.get "drawingbee:#{room}:word", (err, word) ->
           if guessWord == word
               socket.get 'username', (err, username) ->
-                io.sockets.in(room).emit 'winner', username,
-                  word: word
+                io.sockets.in(room).emit 'winner', username, word
                 db.del "drawingbee:#{room}:in_progress"
                 db.del "drawingbee:#{room}:word"
             else
